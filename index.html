@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planet Simulation</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+  <canvas id="canvas"></canvas>
+  <div id="log"></div>
+
+  <div id="spawn-panel">
+    <h3>Spawn a Planet</h3>
+    <label>Mass (kg): <input type="number" id="mass-input" value="1.989e30"></label>
+    <label>Radius (px): <input type="number" id="radius-input" value="30"></label>
+    <label>Velocity X (m/s): <input type="number" id="velocity-x-input" value="10000"></label>
+    <label>Velocity Y (m/s): <input type="number" id="velocity-y-input" value="-10000"></label>
+    <label>Distance (px): <input type="number" id="distance-input" value="0"></label>
+    <button id="spawn-btn">Spawn</button>
+  </div>
+
+  <button id="play-pause-btn">Pause</button>
+  <button id="reset-btn">Reset</button>
+  <button id="spawn-solar-system-btn">Spawn Solar System</button>
+
+
+  <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

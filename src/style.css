@@ -124,3 +124,7 @@ canvas {
   cursor: pointer;
   border-radius: 5px;
 }
+
+.white-border {
+    border: 1px solid white !important;
+}

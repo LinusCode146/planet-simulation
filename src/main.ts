@@ -10,6 +10,11 @@ const distanceScale: number = 1e9;   // 1 Pixel entspricht 1×10⁹ m
 let isPaused: boolean = false;
 const planets: Planet[] = [];
 
+function getDist(p1: Point, p2: Point): number {
+    const dx = p1.x - p2.x;
+    const dy = p1.y - p2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
 function resizeCanvas(): void {
     canvas.width = window.innerWidth - 10;
     canvas.height = window.innerHeight - 10;
@@ -22,10 +27,7 @@ function getMostMassivePlanet(): Planet {
 }
 function deletePlanets(x: number, y: number): void {
     for (let i = planets.length - 1; i >= 0; i--) {
-        const {x: planetX, y: planetY} = planets[i].getPosition();
-        const dx = planetX - x;
-        const dy = planetY - y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        const distance = getDist({x, y}, planets[i].getPosition());
         if (distance <= planets[i].radius + 10) {
             planets.splice(i, 1);
             logMessage(`Deleted planet ${planets[i].name} at (${x}, ${y})`);
@@ -102,11 +104,14 @@ interface Velocity {
     x: number;
     y: number;
 }
-
 interface TrailPoint {
     x: number;
     y: number;
     life: number;
+}
+interface Point {
+    x: number,
+    y: number
 }
 
 class Planet {
@@ -224,6 +229,7 @@ const logDiv: HTMLElement | null = document.getElementById('log');
 playPauseBtn?.addEventListener('click', () => {
     isPaused = !isPaused;
     playPauseBtn.textContent = isPaused ? "Play" : "Pause";
+    canvas.classList.toggle('white-border');
     logMessage(isPaused ? "Simulation paused" : "Simulation resumed");
 });
 resetBtn?.addEventListener('click', () => {

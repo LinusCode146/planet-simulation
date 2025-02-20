@@ -265,4 +265,6 @@ function spawnSolarSystem(): void {
 logMessage("Hallo Herr Viering");
 logMessage("Collision detection and fusion of planets enabled");
 logMessage("Pause/Play simulation with the top center button.");
+logMessage("1px corresponds to 1×10⁹ m in the simulation.");
+logMessage("12e12 corresponds to 12×10¹² m in the simulation.");
 animate();

@@ -116,7 +116,7 @@ class Planet {
             const newY: number = (this.y * this.mass + other.y * other.mass) / newMass;
 
             const fusedPlanet: Planet = new Planet(newX, newY, newRadius, this.color, newMass, newVelocity, `${this.name}-${other.name}`);
-            logMessage(`Neuer Planet: mit Masse ${fusedPlanet.mass.toExponential(3)} kg und Umlaufradius ca. ${(fusedPlanet.radius * distanceScale).toExponential(3)} m`);
+            logMessage(`Neuer Planet: mit Masse ${fusedPlanet.mass.toExponential(3)} kg`);
 
             const indexThis: number = planets.indexOf(this);
             const indexOther: number = planets.indexOf(other);

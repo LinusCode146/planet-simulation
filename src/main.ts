@@ -1,9 +1,10 @@
 const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
+const deltaTimeElement: HTMLElement | null = document.querySelector('.deltaTime');
 
 // Physikalische Konstanten und Zeitskalierung
 const G: number = 6.67430e-11;       // Gravitationskonstante in m^3/(kg·s²)
-const dt: number = 86400;            // Zeitschritt: 86400 s = 1 Tag pro Frame
+let dt: number = 86400;            // Zeitschritt: 86400 s = 1 Tag pro Frame
 const distanceScale: number = 1e9;   // 1 Pixel entspricht 1×10⁹ m
 
 // Globale Variablen
@@ -271,6 +272,9 @@ spawnPlanetBtn?.addEventListener('click', () => {
     } else {
         logMessage(`Spawned new Center Planet.`);
     }
+});
+deltaTimeElement?.addEventListener('input', () => {
+    dt = parseFloat((deltaTimeElement as HTMLInputElement).value);
 });
 window.addEventListener('click', (event: MouseEvent) => {
     deletePlanets(event.clientX, event.clientY);

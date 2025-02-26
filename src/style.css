@@ -21,8 +21,8 @@ canvas {
   position: absolute;
   top: 5px;
   left: 5px;
-  width: 200px;
-  height: 250px;
+  width: 240px;
+  height: 300px;
   background-color: rgba(0, 0, 0, 0.8);
   border: 1px solid orange;
   overflow-y: auto;
@@ -52,12 +52,15 @@ canvas {
 
 #spawn-panel {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   bottom: 20px;
   right: 20px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
+  border: 2px solid white;
+  border-radius: 3px;
   padding: 10px;
-  border-radius: 8px;
   font-size: 14px;
 }
 
@@ -76,6 +79,11 @@ canvas {
   color: white;
   font-size: 14px;
   border-radius: 5px;
+  transition: all .25s ease-in-out;
+}
+
+#spawn-panel button:hover {
+  transform: scale(1.05);
 }
 
 .log-message {
@@ -85,24 +93,20 @@ canvas {
   border-bottom: 1px solid white;
 }
 
-#play-pause-btn {
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  right: 5px;
+  top: 40%;
+  gap: 1rem;
+  z-index: 100;
+  border-radius: 8px;
 }
 
-#reset-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.control-panel > button {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #333;
@@ -110,20 +114,14 @@ canvas {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  transition: all .25s ease-in-out;
 }
 
-#spawn-solar-system-btn {
-  position: absolute;
-  top: 10px;
-  right: 5rem;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+.control-panel > button:hover {
+  background: #fff;
+  color: black;
 }
+
 
 .white-border {
     border: 1px solid white !important;
@@ -131,15 +129,16 @@ canvas {
 
 .regler {
   position: absolute;
-  left: 10px;
-  top: 38%;
+  right: 10px;
+  top: 5rem;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.1);
   padding: 12px 16px;
+  border: 2px solid white;
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: #fff;
   display: flex;
   flex-direction: column;
   gap: 6px;

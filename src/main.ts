@@ -16,16 +16,20 @@ function getDist(p1: Point, p2: Point): number {
     const dy = p1.y - p2.y;
     return Math.sqrt(dx * dx + dy * dy);
 }
+
 function resizeCanvas(): void {
     canvas.width = window.innerWidth - 10;
     canvas.height = window.innerHeight - 10;
 }
+
 function generateRandomColor(): string {
     return "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
 }
+
 function getMostMassivePlanet(): Planet {
     return planets.reduce((max, p) => (p.mass > max.mass ? p : max), planets[0]);
 }
+
 function deletePlanets(x: number, y: number): void {
     for (let i = planets.length - 1; i >= 0; i--) {
         const distance = getDist({x, y}, planets[i].getPosition());
@@ -35,6 +39,7 @@ function deletePlanets(x: number, y: number): void {
         }
     }
 }
+
 function drawTrail(planet: Planet, centerPlanet: Planet): void {
     if (planet.trail.length < 2) return;
     ctx.lineWidth = 2;
@@ -57,6 +62,7 @@ function drawTrail(planet: Planet, centerPlanet: Planet): void {
         ctx.stroke();
     }
 }
+
 function spawnSolarSystem(): void {
     // Clear existing planets
     planets.splice(0, planets.length);
@@ -83,6 +89,7 @@ function spawnSolarSystem(): void {
 
     logMessage("Solar System spawned with Sun, Mercury, Venus, Earth, and Mars");
 }
+
 function logMessage(message: string): void {
     const p: HTMLParagraphElement = document.createElement('p');
     p.textContent = message;
@@ -90,10 +97,11 @@ function logMessage(message: string): void {
     logDiv?.appendChild(p);
     logDiv!.scrollTop = logDiv!.scrollHeight;
 }
+
 function animate(): void {
     if (!isPaused) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for(let i = 0; i < planets.length; i++) {
+        for (let i = 0; i < planets.length; i++) {
             planets[i].update();
             planets[i].draw();
         }
@@ -101,15 +109,18 @@ function animate(): void {
     requestAnimationFrame(animate);
 }
 
+
 interface Velocity {
     x: number;
     y: number;
 }
+
 interface TrailPoint {
     x: number;
     y: number;
     life: number;
 }
+
 interface Point {
     x: number,
     y: number
@@ -124,6 +135,7 @@ class Planet {
     velocity: Velocity;
     name: string;
     trail: TrailPoint[];
+    fadeSpeed: number;
 
     constructor(x: number, y: number, radius: number, color: string, mass: number, velocity: Velocity, name: string) {
         this.x = x;
@@ -134,6 +146,7 @@ class Planet {
         this.velocity = velocity;
         this.name = name;
         this.trail = [];
+        this.fadeSpeed = 0.005;
     }
 
     draw(): void {
@@ -190,7 +203,7 @@ class Planet {
             const newX: number = (this.x * this.mass + other.x * other.mass) / newMass;
             const newY: number = (this.y * this.mass + other.y * other.mass) / newMass;
 
-            const fusedPlanet: Planet = new Planet(newX, newY, newRadius, this.color, newMass, newVelocity, `${this.name}-${other.name}`);
+            const fusedPlanet: Planet = new Planet(newX, newY, newRadius, this.color, newMass, newVelocity, `${this.name}+${other.name}`);
             logMessage(`Neuer Planet: mit Masse ${fusedPlanet.mass.toExponential(3)} kg`);
 
             const indexThis: number = planets.indexOf(this);
@@ -211,12 +224,11 @@ class Planet {
         this.y += this.velocity.y * dt;
 
         this.trail.push({x: this.x, y: this.y, life: 1.0});
-        const fadeSpeed: number = 0.005;
         for (let i = 0; i < this.trail.length; i++) {
-            this.trail[i].life -= fadeSpeed;
+            this.trail[i].life -= this.fadeSpeed;
         }
         while (this.trail.length && this.trail[0].life <= 0) {
-            this.trail.shift();
+            this.trail.shift(); //delete obsolete trail lines
         }
     }
 }
@@ -229,7 +241,7 @@ const logDiv: HTMLElement | null = document.getElementById('log');
 
 playPauseBtn?.addEventListener('click', () => {
     isPaused = !isPaused;
-    playPauseBtn.textContent = isPaused ? "Play" : "Pause";
+    playPauseBtn.textContent = isPaused ? "Play" : "Stop";
     canvas.classList.toggle('white-border');
     logMessage(isPaused ? "Simulation paused" : "Simulation resumed");
 });
@@ -244,6 +256,7 @@ spawnPlanetBtn?.addEventListener('click', () => {
     const velocityX: number = parseFloat((document.getElementById('velocity-x-input') as HTMLInputElement).value);
     const velocityY: number = parseFloat((document.getElementById('velocity-y-input') as HTMLInputElement).value);
     const distancePx: number = parseFloat((document.getElementById('distance-input') as HTMLInputElement).value);
+    const name: string = (document.getElementById('name-input') as HTMLInputElement).value;
 
     if (isNaN(mass) || isNaN(radius) || isNaN(velocityX) || isNaN(velocityY) || isNaN(distancePx)) {
         logMessage("Invalid input! Please enter valid numbers.");
@@ -263,7 +276,7 @@ spawnPlanetBtn?.addEventListener('click', () => {
         generateRandomColor(),
         mass,
         {x: velocityX, y: velocityY},
-        `Planet-${planets.length + 1}`
+        name
     );
 
     planets.push(newPlanet);
@@ -276,6 +289,7 @@ spawnPlanetBtn?.addEventListener('click', () => {
 deltaTimeElement?.addEventListener('input', () => {
     dt = parseFloat((deltaTimeElement as HTMLInputElement).value);
 });
+
 window.addEventListener('click', (event: MouseEvent) => {
     deletePlanets(event.clientX, event.clientY);
 })
@@ -283,10 +297,10 @@ window.addEventListener('resize', resizeCanvas);
 
 logMessage("Hallo Herr Viering");
 logMessage("The planet with the most mass is the center planet.");
-logMessage("Pause/Play simulation with the top center button.");
+logMessage("Pause/Play simulation with the right center button.");
 logMessage("1px corresponds to 1×10⁹ m in the simulation.");
 logMessage("12e12 corresponds to 12×10¹² m in the simulation.");
-logMessage("To delete a planet click on it.");
+logMessage("To delete a planet click on it. (easier when paused)");
 
 resizeCanvas();
 animate();

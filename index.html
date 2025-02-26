@@ -18,15 +18,19 @@
     <label>Velocity X (m/s): <input type="number" id="velocity-x-input" value="0"></label>
     <label>Velocity Y (m/s): <input type="number" id="velocity-y-input" value="35000"></label>
     <label>Distance (px): <input type="number" id="distance-input" value="160"></label>
+    <label>Name: <input type="text" id="name-input" value="Tatooine"></label>
     <button id="spawn-btn">Spawn</button>
   </div>
 
-  <button id="play-pause-btn">Pause</button>
-  <button id="reset-btn">Reset</button>
-  <button id="spawn-solar-system-btn">Spawn Solar System</button>
+  <div class="control-panel">
+    <button id="reset-btn">Reset</button>
+    <button id="play-pause-btn">Stop</button>
+    <button id="spawn-solar-system-btn">Spawn Solar System</button>
+  </div>
 
-  <label class="regler"> DeltaTime (seconds/Frame) default 1day per Frame
-    <input class="deltaTime" type="text" step="1" min="1" max="10" placeholder="86400" />
+
+  <label class="regler"> DeltaTime (sec/Frame)
+    <input class="deltaTime" type="text" step="1" min="1" max="10" placeholder="86400 1day/F" />
   </label>
 
 

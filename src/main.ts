@@ -73,7 +73,7 @@ function spawnSolarSystem(): void {
 
     // Mercury
     const mercury = new Planet(5.79e10, 0, 2, 'gray', 3.285e23, {x: 0, y: 47870}, 'Mercury');
-    planets.push(mercury);
+    planets.push(mercury)
 
     // Venus
     const venus = new Planet(1.082e11, 0, 5, 'orange', 4.867e24, {x: 0, y: 35020}, 'Venus');

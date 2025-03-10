@@ -31,14 +31,17 @@ function getMostMassivePlanet(): Planet {
 }
 
 function deletePlanets(x: number, y: number): void {
-    for (let i = planets.length - 1; i >= 0; i--) {
-        const distance = getDist({x, y}, planets[i].getPosition());
-        if (distance <= planets[i].radius + 10) {
+    for (let i = planets.length - 1; i >= 0; i--) { // Iterate in reverse to avoid skipping elements
+        const planet = planets[i];
+        const distance = getDist({ x, y }, planet.getPosition());
+        if (distance <= planet.radius + 10) {
             planets.splice(i, 1);
-            logMessage(`Deleted planet ${planets[i].name} at (${x}, ${y})`);
+            logMessage(`Deleted planet ${planet.name} at (${x}, ${y})`);
         }
     }
 }
+
+
 
 function drawTrail(planet: Planet, centerPlanet: Planet): void {
     if (planet.trail.length < 2) return;
